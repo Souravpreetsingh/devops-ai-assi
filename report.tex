@@ -1,0 +1,486 @@
+\documentclass[12pt,a4paper]{report}
+\UseRawInputEncoding
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=0.8in}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{enumitem}
+
+\onehalfspacing
+
+\setlist{nosep,leftmargin=1.2em}
+
+\definecolor{codebg}{rgb}{0.95,0.95,0.95}
+\definecolor{primary}{rgb}{0.0,0.45,0.75}
+
+\lstset{
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  numbers=none,
+  xleftmargin=1em,
+  xrightmargin=1em,
+}
+
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{primary}}
+  {}{0pt}{\Huge}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{primary}}
+  {\thesection}{1em}{}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}
+  {\thesubsection}{1em}{}
+
+\titlespacing*{\chapter}{0pt}{-20pt}{10pt}
+\titlespacing*{\section}{0pt}{8pt}{4pt}
+\titlespacing*{\subsection}{0pt}{6pt}{3pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\pagenumbering{roman}
+
+\begin{document}
+
+% ===== TITLE PAGE =====
+\begin{titlepage}
+\begin{center}
+\vspace*{1.5cm}
+{\Huge \textbf{Devi AI DevOps Platform}} \\[8pt]
+{\Large An AI-Powered Infrastructure Automation Operating System} \\[20pt]
+{\large A Project Report submitted for the award of} \\[4pt]
+{\large \textbf{Bachelor of Technology} in} \\[4pt]
+{\large \textbf{Computer Science and Engineering}} \\[20pt]
+{\large Submitted by} \\[6pt]
+{\large \textbf{Project Team}} \\[6pt]
+{\large Under the guidance of} \\[6pt]
+{\large \textbf{Prof. Guide Name}} \\[20pt]
+{\large Department of Computer Science and Engineering} \\[6pt]
+{\large University / Institute Name} \\[6pt]
+{\large \today}
+\end{center}
+\end{titlepage}
+
+% ===== CERTIFICATE =====
+\chapter*{Certificate}
+\vspace{-0.5cm}
+This is to certify that the project titled \textbf{``Devi AI DevOps Platform --- An AI-Powered Infrastructure Automation Operating System''} is a bonafide work carried out by the Project Team in partial fulfillment of the requirements for the award of the degree of \textbf{Bachelor of Technology} in \textbf{Computer Science and Engineering} during the academic year 2025--2026.
+
+\vspace{0.5cm}
+\begin{flushleft}
+\begin{tabular}{p{6cm}l}
+\textbf{Prof. Guide Name} & \\
+(Project Guide) & \\
+\vspace{0.6cm} & \\
+\textbf{Head of Department} & \\
+(CSE) & \\
+\vspace{0.6cm} & \\
+\textbf{External Examiner} & \\
+\end{tabular}
+\end{flushleft}
+\vfill
+\begin{center} Date: \today \qquad Place: City \end{center}
+\newpage
+
+% ===== ABSTRACT =====
+\chapter*{Abstract}
+\vspace{-0.5cm}
+Devi is a production-grade, AI-powered DevOps automation platform that transforms infrastructure management through natural language interaction. Built with a futuristic interface inspired by Iron Man's Jarvis, it enables users to deploy, monitor, and manage Docker containers and Kubernetes clusters using voice commands or text input. The platform integrates an NLP engine for command parsing, a conversational voice assistant with silence-based auto-submission, real-time system monitoring with anomaly detection, and an intelligent safety layer enforcing image whitelists and operation timeouts. All container operations execute against the real Docker daemon when available, with graceful mock fallbacks.
+
+\textbf{Keywords:} DevOps, AI, Docker, Kubernetes, NLP, Container Orchestration, Voice Commands, Infrastructure Automation
+
+\newpage
+
+% ===== ACKNOWLEDGEMENT =====
+\chapter*{Acknowledgement}
+\vspace{-0.5cm}
+We extend our sincere gratitude to our project guide \textbf{Prof. Guide Name} for their invaluable guidance, and to the \textbf{Head of Department} for providing necessary resources. We thank the open-source community for the tools that made this platform possible --- Next.js, React, Express.js, Dockerode, and Socket.io. Finally, we thank our families for their unwavering support.
+
+\vspace{0.5cm}
+\begin{flushright} \textbf{--- Project Team} \end{flushright}
+\newpage
+
+% ===== TOC =====
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
+
+% ===== CHAPTER 1: INTRODUCTION =====
+\chapter{Introduction}
+
+\section{Overview}
+Devi is a production-grade, AI-powered DevOps automation platform that transforms infrastructure management through natural language interaction. Built with a futuristic, cinematic interface inspired by Iron Man's Jarvis, Devi enables users to deploy, monitor, and manage Docker containers and Kubernetes clusters using voice commands or text input. The platform integrates real-time system monitoring, anomaly detection, CI/CD pipeline management, and intelligent container orchestration into a unified dashboard experience.
+
+\section{Motivation}
+Modern DevOps operations require expertise in multiple tools --- Docker, Kubernetes, CI/CD pipelines, monitoring systems, and cloud platforms. This complexity creates a steep learning curve for new engineers and slows down experienced operators performing routine tasks. Devi addresses this challenge by providing a natural language interface that abstracts away command-line intricacies, allowing operators to manage infrastructure using plain English or voice commands.
+
+\section{Objectives}
+\begin{itemize}
+  \item Build an AI-powered platform that interprets natural language commands for infrastructure management
+  \item Provide real-time system monitoring with anomaly detection and proactive alerting
+  \item Enable voice-controlled container and cluster operations through a conversational assistant
+  \item Implement safety mechanisms to prevent dangerous or unauthorized operations
+  \item Create a cinematic, futuristic user interface that makes infrastructure management engaging and accessible
+\end{itemize}
+
+\section{Scope}
+The platform covers Docker container lifecycle management (create, start, stop, restart, remove), Kubernetes cluster monitoring and pod management, natural language command parsing for automated deployments, real-time system metrics visualization, autonomous anomaly detection with proactive suggestions, CI/CD pipeline status tracking, and a conversational voice assistant with speech synthesis. The system is designed for both individual developers and enterprise DevOps teams.
+
+% ===== CHAPTER 2: ARCHITECTURE =====
+\chapter{System Architecture}
+
+\section{Three-Tier Architecture}
+The platform follows a modern three-tier architecture separating concerns across presentation, application, and infrastructure layers:
+
+\begin{itemize}
+  \item \textbf{Presentation Tier (Frontend)}: Next.js 16 with React 19, Tailwind CSS v4, and Framer Motion animations --- delivers a responsive, cinematic user interface across 14 routes including dashboards, chat, deployment panels, and system monitoring.
+  \item \textbf{Application Tier (Backend)}: Express.js with TypeScript, Socket.io for real-time communication, and Swagger/OpenAPI documentation --- handles business logic, AI processing, NLP command parsing, and REST API routing.
+  \item \textbf{Infrastructure Tier (Docker/K8s)}: Docker daemon integration via Dockerode and Kubernetes API interaction via @kubernetes/client-node --- executes actual infrastructure operations with real container deployment and cluster management.
+\end{itemize}
+
+The frontend communicates with the backend through HTTP REST endpoints for CRUD operations and WebSocket connections for real-time streaming of deployment logs, container updates, and system metrics. The backend services layer orchestrates all business logic including intent classification, command parsing, safety validation, and anomaly detection before executing infrastructure operations.
+
+\section{Service Ports}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{c c X}
+\toprule
+\textbf{Port} & \textbf{Service} & \textbf{Description} \\
+\midrule
+3000 & Frontend & Next.js dashboard with AI chat and deployment UI \\
+4000 & Backend API & Express.js REST API + Socket.io WebSocket \\
+4000/api/docs & API Docs & Swagger UI for interactive exploration \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Technology Stack}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l l l}
+\toprule
+\textbf{Category} & \textbf{Technology} & \textbf{Version} \\
+\midrule
+Frontend & Next.js / React / Tailwind CSS & 16.2 / 19 / 4 \\
+Animations & Framer Motion & 11 \\
+Backend & Express.js / TypeScript / Node.js & 4 / 5 / 26 \\
+Docker SDK & Dockerode & 4 \\
+Real-Time & Socket.io & 4 \\
+Kubernetes & @kubernetes/client-node & 0.21 \\
+Voice & Web Speech API & Browser native \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% ===== CHAPTER 3: KEY FEATURES =====
+\chapter{Key Features}
+
+\section{Natural Language Management}
+Devi's AI engine interprets commands into infrastructure actions:
+\begin{lstlisting}
+"Deploy MongoDB on port 27017"    "Create Redis container"
+"Restart nginx"                    "Stop postgres"
+"Show all containers"             "Deploy MERN stack"
+"Check system health"             "Show CPU usage"
+"Show pods in production"         "Scale web-frontend to 5"
+\end{lstlisting}
+
+\section{AI Command Parser}
+The NLP parser (\texttt{services/parser.ts}) resolves intent through pattern matching:
+\begin{itemize}
+  \item \textbf{Image Resolution}: \texttt{mongodb} $\rightarrow$ \texttt{mongo:7}, \texttt{nginx} $\rightarrow$ \texttt{nginx:alpine}
+  \item \textbf{Port Extraction}: \texttt{"on port 27017"} $\rightarrow$ \texttt{27017:27017}
+  \item \textbf{Stack Detection}: \texttt{"MERN stack"} triggers multi-service compose generation
+  \item \textbf{Project Detection}: \texttt{package.json} $\rightarrow$ Node.js, \texttt{Cargo.toml} $\rightarrow$ Rust
+\end{itemize}
+
+\section{Safe Execution Layer}
+All operations pass through \texttt{services/safety.ts}:
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l l X}
+\toprule
+\textbf{Check} & \textbf{Rule} & \textbf{Description} \\
+\midrule
+Image Whitelist & Allow-list & Only well-known images permitted \\
+Privileged Mode & Blocked & \texttt{--privileged} containers rejected \\
+Host Path Mounts & Blocked & \texttt{/etc}, \texttt{/var/run}, \texttt{/proc} prevented \\
+Timeout & 120s & Operations auto-terminated after 2 minutes \\
+Name Validation & 1--64 chars & Alphanumeric names only \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Anomaly Detection}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l l X}
+\toprule
+\textbf{Type} & \textbf{Threshold} & \textbf{Detection} \\
+\midrule
+CPU Spike & $>$85\% + 130\% avg & Sudden utilization increase \\
+Memory Leak & $>$90\% + upward trend & Growth over 5+ samples \\
+Crash-Loop & $\geq$3 restarts/5min & Container restart cycling \\
+High Latency & $>$500ms & Slow response times \\
+Error Rate & $>$5\% requests & Application error spike \\
+Disk Full & $>$90\% & Storage exhaustion warning \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Voice Assistant}
+\begin{itemize}
+  \item Always-listening microphone on chat page --- no wake word
+  \item Silence detection processes audio at $\sim$1.5s pause
+  \item Speech synthesis with calm cinematic tone
+  \item Auto-restart after speaking for continuous conversation
+\end{itemize}
+
+\section{Real-Time Deployment Streaming}
+Deployments stream live progress via WebSocket events. The client subscribes to deployment channels and receives real-time updates as containers are pulled, created, and started. This provides full visibility into the deployment lifecycle without polling.
+
+\begin{lstlisting}
+Connection: ws://localhost:4000
+
+deployment:start    → "MERN stack deployment initiated"
+deployment:progress → "Pulling mongo:7..."
+deployment:progress → "Creating container mongodb..."
+deployment:success  → "MERN stack deployed successfully"
+deployment:error    → "Port 3000 is already in use"
+docker:update       → Container list refreshed
+activity:new        → Activity feed updated
+\end{lstlisting}
+
+\section{Deployment Workflow}
+When a user issues a command like "Deploy MongoDB on port 27017", the following pipeline executes:
+
+\begin{enumerate}
+  \item \textbf{Voice/Text Input}: Captured via Web Speech API or text input on the chat/deploy page, sent to \texttt{POST /api/docker/parse}
+  \item \textbf{NLP Parsing}: The parser extracts image name (\texttt{mongo:7}), port mapping (\texttt{27017:27017}), and container name (\texttt{mongodb}) from natural language
+  \item \textbf{Safety Validation}: The safety layer checks the image against the whitelist, validates the port range, and confirms the container name format
+  \item \textbf{Image Pulling}: Dockerode pulls the mongo:7 image from Docker Hub with progress streamed via WebSocket
+  \item \textbf{Container Creation}: A new container is created with the specified port bindings and default environment variables
+  \item \textbf{Container Start}: The container is started and health-checked; success/failure is reported back through the UI
+  \item \textbf{Activity Logging}: The deployment event is recorded in the activity feed and the container list is refreshed
+\end{enumerate}
+
+\section{Frontend Components}
+Key reusable components include:
+\begin{itemize}
+  \item \textbf{HolographicCard}: Glass-morphism card with animated gradient borders and backdrop blur
+  \item \textbf{Sidebar}: Navigation sidebar with active state indicators and icon-based links
+  \item \textbf{useVoiceAssistant}: Custom React hook integrating Web Speech API with silence detection (1500ms timeout) and speech synthesis for Jarvis-style responses
+  \item \textbf{Deploy Panel}: Quick-deploy buttons for MongoDB, Redis, Nginx, PostgreSQL, Node.js, MySQL, plus MERN/LAMP/Redis stack templates with progress indicators
+\end{itemize}
+
+% ===== CHAPTER 4: API REFERENCE =====
+\chapter{API Reference}
+
+\section{Docker Endpoints}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{c c X}
+\toprule
+\textbf{Method} & \textbf{Endpoint} & \textbf{Description} \\
+\midrule
+GET & /api/docker/containers & List all containers \\
+POST & /api/docker/containers/deploy & Deploy a container \\
+POST & /api/docker/containers/:id/\{start,stop,restart\} & Container lifecycle \\
+GET & /api/docker/containers/:id/logs & Fetch container logs \\
+POST & /api/docker/parse & NLP parse a deploy command \\
+POST & /api/docker/create & Create container (pull + create) \\
+POST & /api/docker/deploy & Full deploy (pull + create + start) \\
+POST & /api/docker/compose & Deploy compose stacks \\
+POST & /api/docker/containerize & Auto-detect and containerize \\
+GET & /api/docker/logs/:id & Stream deployment logs \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Kubernetes Endpoints}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{c c X}
+\toprule
+\textbf{Method} & \textbf{Endpoint} & \textbf{Description} \\
+\midrule
+GET & /api/kubernetes/pods & List pods \\
+GET & /api/kubernetes/nodes & List nodes \\
+GET & /api/kubernetes/deployments & List deployments \\
+GET & /api/kubernetes/namespaces & List namespaces \\
+GET & /api/kubernetes/health & Cluster health check \\
+POST & /api/kubernetes/deployments/:name/\{restart,scale\} & Deployment actions \\
+DELETE & /api/kubernetes/pod/:ns/:name & Delete a pod \\
+GET & /api/kubernetes/pod/:ns/:name/logs & Stream pod logs \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{AI and System Endpoints}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{c c X}
+\toprule
+\textbf{Method} & \textbf{Endpoint} & \textbf{Description} \\
+\midrule
+POST & /api/ai/chat & Process natural language commands \\
+GET & /api/ai/history & Chat history \\
+GET & /api/system/stats & CPU, RAM, disk, network metrics \\
+GET & /api/health & Server health check \\
+POST & /api/terminal/execute & Execute shell command \\
+POST & /api/terminal/validate & Validate command safety \\
+POST & /api/agent/anomalies & Detect anomalies \\
+POST & /api/agent/suggestions & Generate suggestions \\
+POST & /api/agent/remember & Store agent memory \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% ===== CHAPTER 5: FRONTEND =====
+\chapter{Frontend Overview}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{c X}
+\toprule
+\textbf{Route} & \textbf{Description} \\
+\midrule
+\texttt{/} & Landing page with Devi branding, video background \\
+\texttt{/login} & Authentication (admin / admin123) \\
+\texttt{/dashboard} & System metrics with CPU/RAM/disk charts \\
+\texttt{/chat} & AI chat with voice input and typewriter responses \\
+\texttt{/deploy} & Deployment panel with quick-deploy templates \\
+\texttt{/docker} & Container create/start/stop/restart \\
+\texttt{/kubernetes} & K8s cluster overview \\
+\texttt{/cicd} & CI/CD pipeline management \\
+\texttt{/agent} & Anomaly detection and suggestions \\
+\texttt{/terminal} & Interactive web terminal \\
+\texttt{/logs} & Centralized log viewer \\
+\texttt{/monitoring} & Monitoring dashboards \\
+\texttt{/settings} & Platform configuration \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% ===== CHAPTER 6: INSTALLATION =====
+\chapter{Installation}
+
+\subsection*{Prerequisites}
+Node.js v18+, Docker Desktop (optional), npm/yarn, modern browser.
+
+\subsection*{Quick Start}
+\begin{lstlisting}[language=bash]
+git clone https://github.com/devi-platform/devi.git
+cd devi
+
+cd backend && npm install && cp .env.example .env
+npm run build && npm start &
+
+cd ../devi && npm install && cp .env.example .env.local
+npm run build && npm start &
+
+open http://localhost:3000   # Login: admin / admin123
+\end{lstlisting}
+
+% ===== CHAPTER 7: PROJECT STRUCTURE =====
+\chapter{Project Structure}
+
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize, xleftmargin=0.5em, xrightmargin=0.5em]
+devi/
+├── src/                          # Frontend (Next.js)
+│   ├── app/                      # 14 pages
+│   │   ├── page.tsx                Landing page
+│   │   ├── login/                  Authentication
+│   │   ├── dashboard/              System metrics
+│   │   ├── chat/                   AI chat + voice
+│   │   ├── deploy/                 Deployment panel
+│   │   ├── docker/                 Container mgmt
+│   │   ├── kubernetes/             K8s management
+│   │   ├── cicd/                   CI/CD pipelines
+│   │   ├── agent/                  Anomaly agent
+│   │   ├── terminal/               Web terminal
+│   │   ├── logs/                   Log viewer
+│   │   ├── monitoring/             Monitoring
+│   │   └── settings/               Configuration
+│   ├── components/               HolographicCard, Sidebar, Terminal
+│   ├── hooks/                    useVoiceAssistant
+│   └── lib/                      api.ts, socket.ts, auth.ts
+├── backend/
+│   └── src/
+│       ├── index.ts              Server entry
+│       ├── routes/               auth, docker, deploy, kubernetes,
+│       │                         ai, system, agent, cicd,
+│       │                         terminal, logs
+│       ├── services/             docker, kubernetes, ai, parser,
+│       │                         safety, system, agent, memory,
+│       │                         auth, shell, logs
+│       └── socket/               WebSocket event handlers
+├── devi-hero/                    Marketing landing page
+├── Dockerfile / Dockerfile.frontend
+├── .env.example / README.md
+└── report.tex                    This document
+\end{lstlisting}
+
+% ===== CHAPTER 8: CONCLUSION =====
+\section{Deploy Panel Layout}
+The deploy page (\texttt{/deploy}) provides a comprehensive container deployment interface organized into three sections:
+
+\begin{itemize}
+  \item \textbf{AI Input Bar}: A text input at the top where users type or speak deployment commands like "Deploy Redis" or "Create MongoDB container". The input is processed through the NLP parser and the result is displayed before execution.
+  \item \textbf{Quick-Deploy Buttons}: Six one-click deployment buttons for popular service images --- MongoDB, Redis, Nginx, PostgreSQL, Node.js, and MySQL. Each button immediately initiates pull, create, and start operations with sensible defaults.
+  \item \textbf{Stack Deployments}: Three stack deployment buttons (MERN, LAMP, Redis Stack) that generate multi-service Docker Compose configurations and deploy all containers simultaneously with proper network configuration.
+  \item \textbf{Container Management}: Below the deployment controls, a list of running containers displays status, ports, and uptime, with start/stop/restart action buttons and a logs viewer for each container.
+\end{itemize}
+
+\chapter{Conclusion}
+
+\section{Summary}
+Devi represents a paradigm shift in DevOps infrastructure management. By combining natural language processing, real-time streaming, and cinematic UI design, it makes complex infrastructure operations accessible through simple voice commands. The platform is production-ready, fully containerized, and designed for extensibility. Real-world testing has verified successful container deployment (mongo:7, Redis stacks) against a live Docker daemon, and the entire codebase compiles with zero TypeScript errors.
+
+\section{Key Achievements}
+\begin{itemize}
+  \item \textbf{Real Docker Integration}: Successfully deployed containers against a real Docker daemon via voice commands, with automatic image pulling, port mapping, and health verification
+  \item \textbf{Zero TypeScript Errors}: The entire codebase compiles cleanly with no type errors across both frontend and backend
+  \item \textbf{Natural Language Understanding}: NLP parser accurately resolves colloquial service names (\texttt{"mongodb"} $\rightarrow$ \texttt{mongo:7}), extracts port mappings from conversational phrases, and detects multi-service stack templates
+  \item \textbf{Comprehensive Safety}: Multi-layer security system enforcing image whitelists, privileged container blocks, host path protection, and 120-second operation timeouts
+  \item \textbf{Full Dashboard Ecosystem}: 14 frontend pages covering every aspect of infrastructure management with real-time metrics and cinematic UI
+\end{itemize}
+
+\section{Future Scope}
+\begin{itemize}
+  \item \textbf{Helm Chart Management}: Kubernetes package management through natural language commands
+  \item \textbf{Cloud Provider Integration}: AWS, Azure, and GCP resource management via Devi's AI interface
+  \item \textbf{Autonomous Operations}: Self-healing infrastructure that detects and resolves issues without human intervention
+  \item \textbf{Multi-Cluster Management}: Centralized management of multiple Kubernetes clusters across cloud providers
+  \item \textbf{Advanced Analytics}: ML-based predictive analytics for capacity planning, cost optimization, and failure prediction
+\end{itemize}
+
+\end{document}

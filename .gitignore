@@ -1,0 +1,10 @@
+*.aux
+*.fdb_latexmk
+*.log
+*.out
+*.synctex(busy)
+*.toc
+__pycache__/
+*.pyc
+*.pyo
+*.zip
