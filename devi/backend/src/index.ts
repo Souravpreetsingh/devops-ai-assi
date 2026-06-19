@@ -31,11 +31,16 @@ const ALLOWED_ORIGINS = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
   "http://127.0.0.1:3000",
-].filter(Boolean) as string[]
+  /^https?:\/\/.*\.vercel\.app$/,
+].filter(Boolean)
 
 const corsOptions: cors.CorsOptions = {
   origin: (origin, callback) => {
-    if (!origin || ALLOWED_ORIGINS.includes(origin)) return callback(null, true)
+    if (!origin) return callback(null, true)
+    const allowed = ALLOWED_ORIGINS.some((o) =>
+      typeof o === "string" ? o === origin : o.test(origin)
+    )
+    if (allowed) return callback(null, true)
     callback(new Error("Not allowed by CORS"))
   },
   credentials: true,
@@ -49,6 +54,11 @@ app.use(helmet({ contentSecurityPolicy: false }))
 app.use(cors(corsOptions))
 app.use(morgan("dev"))
 app.use(express.json({ limit: "1mb" }))
+
+app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  console.error("[Error]", err.message)
+  res.status(500).json({ success: false, error: err.message || "Internal server error" })
+})
 
 const limiter = rateLimit({
   windowMs: 60 * 1000,
@@ -99,11 +109,15 @@ seedDefaultUser()
 
 const PORT = parseInt(process.env.PORT || "4000")
 
-server.listen(PORT, "0.0.0.0", () => {
-  console.log(`\n  ✦ Devi AI DevOps Platform v2.0.0`)
-  console.log(`  ──────────────────────────────────`)
-  console.log(`  REST API  : http://0.0.0.0:${PORT}/api`)
-  console.log(`  API Docs  : http://0.0.0.0:${PORT}/api/docs`)
-  console.log(`  WebSocket : ws://0.0.0.0:${PORT}`)
-  console.log(`  Health    : http://0.0.0.0:${PORT}/api/health\n`)
-})
+if (!process.env.VERCEL) {
+  server.listen(PORT, "0.0.0.0", () => {
+    console.log(`\n  ✦ Devi AI DevOps Platform v2.0.0`)
+    console.log(`  ──────────────────────────────────`)
+    console.log(`  REST API  : http://0.0.0.0:${PORT}/api`)
+    console.log(`  API Docs  : http://0.0.0.0:${PORT}/api/docs`)
+    console.log(`  WebSocket : ws://0.0.0.0:${PORT}`)
+    console.log(`  Health    : http://0.0.0.0:${PORT}/api/health\n`)
+  })
+}
+
+export default app
