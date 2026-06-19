@@ -1,0 +1,27 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "next build",
+  "outputDirectory": ".next",
+  "installCommand": "npm install",
+  "experimentalServices": {
+    "frontend": {
+      "routePrefix": "/",
+      "framework": "nextjs"
+    },
+    "backend": {
+      "root": "backend",
+      "entrypoint": "src/index.ts",
+      "routePrefix": "/_/backend"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/_/backend/api/$1"
+    },
+    {
+      "source": "/socket.io/(.*)",
+      "destination": "/_/backend/socket.io/$1"
+    }
+  ]
+}
